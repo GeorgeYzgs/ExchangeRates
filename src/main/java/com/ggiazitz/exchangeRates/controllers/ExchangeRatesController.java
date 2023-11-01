@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/v1")
 public class ExchangeRatesController {
 
-
     private final ExchangeAPIService exchangeAPIService;
 
     public ExchangeRatesController(ExchangeAPIService exchangeAPIService) {
