@@ -2,6 +2,7 @@ package com.ggiazitz.exchangeRates.controllers;
 
 import com.ggiazitz.exchangeRates.dtos.ConversionRatesDTO;
 import com.ggiazitz.exchangeRates.dtos.ExchangeRatesDTO;
+import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,12 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/exchange")
-    public ExchangeRatesDTO exchange(@RequestParam String source, @RequestParam(required = false) String currencies) {
+    public ExchangeRatesDTO exchange(@RequestParam CurrencyCode source, @RequestParam(required = false) List<CurrencyCode> currencies) {
         return exchangeAPIService.exchange(source, currencies);
     }
 
     @GetMapping("/convert")
-    public ConversionRatesDTO convert(@RequestParam String from, @RequestParam List<String> to, @RequestParam Integer amount) {
+    public ConversionRatesDTO convert(@RequestParam CurrencyCode from, @RequestParam List<CurrencyCode> to, @RequestParam Integer amount) {
         return null;
     }
 }

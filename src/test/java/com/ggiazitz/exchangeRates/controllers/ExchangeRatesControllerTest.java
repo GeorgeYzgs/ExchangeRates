@@ -1,6 +1,7 @@
 package com.ggiazitz.exchangeRates.controllers;
 
 import com.ggiazitz.exchangeRates.dtos.ExchangeRatesDTO;
+import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class ExchangeRatesControllerTest {
 
     @Test
     public void givenValidRequest_whenRequestingExchangeRates_thenReturnExchangeRates() throws Exception {
-        String source = "EUR";
+        CurrencyCode source = CurrencyCode.EUR;
 
         RequestBuilder request = MockMvcRequestBuilders.get("/v1/exchange?source=" + source).accept(MediaType.APPLICATION_JSON);
 
@@ -49,9 +50,9 @@ public class ExchangeRatesControllerTest {
 
     @Test
     public void givenInvalidRequest_whenRequestingExchangeRates_thenReturnBadRequest() throws Exception {
-        String source = null;
+        CurrencyCode source = null;
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/v1/exchange").accept(MediaType.APPLICATION_JSON);
+        RequestBuilder request = MockMvcRequestBuilders.get("/v1/exchange?source=" + source).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request).andExpect(status().isBadRequest());
     }
