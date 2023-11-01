@@ -1,4 +1,7 @@
 package com.ggiazitz.exchangeRates.dtos;
 
-public class ExchangeRatesDTO {
+import java.util.Map;
+
+public record ExchangeRatesDTO(Long timestamp, String source, Map<String, Double> quotes) {
+
 }

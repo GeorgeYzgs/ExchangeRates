@@ -22,13 +22,12 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/exchange")
-    public ExchangeRatesDTO exchange(@RequestParam String source, @RequestParam(required = false) String currencies){
-        System.out.println("hello");
-        return null;
+    public ExchangeRatesDTO exchange(@RequestParam String source, @RequestParam(required = false) String currencies) {
+        return exchangeAPIService.exchange(source, currencies);
     }
 
     @GetMapping("/convert")
-    public ConversionRatesDTO convert(@RequestParam String from, @RequestParam List<String> to, @RequestParam Integer amount){
+    public ConversionRatesDTO convert(@RequestParam String from, @RequestParam List<String> to, @RequestParam Integer amount) {
         return null;
     }
 }
