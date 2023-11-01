@@ -46,4 +46,13 @@ public class ExchangeRatesControllerTest {
                 .andExpect(jsonPath("$.timestamp").value(timestamp))
                 .andExpect(jsonPath("$.quotes", Matchers.hasEntry("EURUSD", 1.054597)));
     }
+
+    @Test
+    public void givenInvalidRequest_whenRequestingExchangeRates_thenReturnBadRequest() throws Exception {
+        String source = null;
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/v1/exchange").accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request).andExpect(status().isBadRequest());
+    }
 }
