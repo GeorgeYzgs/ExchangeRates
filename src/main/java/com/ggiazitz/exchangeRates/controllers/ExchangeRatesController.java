@@ -1,6 +1,6 @@
 package com.ggiazitz.exchangeRates.controllers;
 
-import com.ggiazitz.exchangeRates.dtos.ConversionRatesDTO;
+import com.ggiazitz.exchangeRates.dtos.ConversionRatesResponseDTO;
 import com.ggiazitz.exchangeRates.dtos.ExchangeRatesDTO;
 import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
@@ -27,7 +27,7 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/convert")
-    public ConversionRatesDTO convert(@RequestParam CurrencyCode from, @RequestParam List<CurrencyCode> to, @RequestParam Integer amount) {
-        return null;
+    public ConversionRatesResponseDTO convert(@RequestParam CurrencyCode from, @RequestParam List<CurrencyCode> to, @RequestParam Double amount) {
+        return exchangeAPIService.convert(from, to, amount);
     }
 }

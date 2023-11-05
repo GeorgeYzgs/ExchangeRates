@@ -1,5 +1,6 @@
 package com.ggiazitz.exchangeRates.services.impl;
 
+import com.ggiazitz.exchangeRates.dtos.ConversionRatesResponseDTO;
 import com.ggiazitz.exchangeRates.dtos.ExchangeRatesDTO;
 import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
@@ -36,6 +37,11 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
             return exchangeAllCurrencies(source);
         }
         return exchangeCurrencies(source, currencies);
+    }
+
+    @Override
+    public ConversionRatesResponseDTO convert(CurrencyCode from, List<CurrencyCode> to, Double amount) {
+        return null;
     }
 
     private ExchangeRatesDTO exchangeCurrencies(CurrencyCode source, List<CurrencyCode> currencies) {
