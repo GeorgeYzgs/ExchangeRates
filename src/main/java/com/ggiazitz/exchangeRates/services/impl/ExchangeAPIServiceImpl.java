@@ -35,6 +35,7 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
     }
 
     @Override
+    @Cacheable("Currencies")
     public ExchangeRatesDTO exchange(CurrencyCode source, List<CurrencyCode> currencies) {
         if (currencies == null) {
             return exchangeAllCurrencies(source);
@@ -64,7 +65,6 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
         return new ConversionRatesResponseDTO(System.currentTimeMillis(), amount, currencyConversion);
     }
 
-    @Cacheable("Currencies")
     public ExchangeRatesDTO exchangeCurrencies(CurrencyCode source, List<CurrencyCode> currencies) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
@@ -73,7 +73,6 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
                 .retrieve().bodyToMono(ExchangeRatesDTO.class).block();
     }
 
-    @Cacheable("AllCurrencies")
     public ExchangeRatesDTO exchangeAllCurrencies(CurrencyCode source) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
