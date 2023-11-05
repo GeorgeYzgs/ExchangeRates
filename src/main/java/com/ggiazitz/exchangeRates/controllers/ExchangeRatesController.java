@@ -13,6 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
+//TODO change to reactive
+//TODO implement hibernate validator for user input
 public class ExchangeRatesController {
 
     private final ExchangeAPIService exchangeAPIService;

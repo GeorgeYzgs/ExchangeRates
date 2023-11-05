@@ -51,7 +51,7 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
         return mapConversionResult(amount, response);
     }
 
-    private ConversionRatesResponseDTO mapConversionResult(Double amount, ExchangeRatesDTO response) {
+    public ConversionRatesResponseDTO mapConversionResult(Double amount, ExchangeRatesDTO response) {
         List<ConversionRatesDTO> currencyConversion = new ArrayList<>();
         for (var mapEntry : response.quotes().entrySet()) {
             String currencyPair = mapEntry.getKey();
