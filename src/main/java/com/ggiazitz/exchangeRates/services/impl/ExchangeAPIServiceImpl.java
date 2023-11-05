@@ -5,6 +5,7 @@ import com.ggiazitz.exchangeRates.dtos.ConversionRatesResponseDTO;
 import com.ggiazitz.exchangeRates.dtos.ExchangeRatesDTO;
 import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @PropertySource(value = "classpath:application.properties")
 public class ExchangeAPIServiceImpl implements ExchangeAPIService {
 
@@ -45,6 +47,7 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
 
     @Override
     public ConversionRatesResponseDTO convert(CurrencyCode from, List<CurrencyCode> to, Double amount) {
+        log.info("Accessing currency conversion endpoint");
         ExchangeRatesDTO response = webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", from)
                         .queryParam("currencies", StringUtils.join(to.stream().map(Object::toString).collect(Collectors.toList()), ','))
@@ -66,6 +69,7 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
     }
 
     public ExchangeRatesDTO exchangeCurrencies(CurrencyCode source, List<CurrencyCode> currencies) {
+        log.info("Accessing currencies endpoint");
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
                         .queryParam("currencies", StringUtils.join(currencies.stream().map(Object::toString).collect(Collectors.toList()), ','))
@@ -74,6 +78,7 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
     }
 
     public ExchangeRatesDTO exchangeAllCurrencies(CurrencyCode source) {
+        log.info("Accessing currencies endpoint for all currencies");
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
                         .queryParam("access_key", accessKey).build())
