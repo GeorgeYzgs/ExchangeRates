@@ -1,7 +1,5 @@
 package com.ggiazitz.exchangeRates.dtos;
 
-import com.ggiazitz.exchangeRates.models.CurrencyCode;
-
-public record ConversionRatesDTO(CurrencyCode source, CurrencyCode currencies, Double amount, Double quote,
+public record ConversionRatesDTO(String fromTo, Double quote,
                                  Double result) {
 }

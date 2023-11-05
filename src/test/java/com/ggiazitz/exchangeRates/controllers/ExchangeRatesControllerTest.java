@@ -67,6 +67,7 @@ public class ExchangeRatesControllerTest {
     public void givenValidRequest_whenRequestingCurrencyConversion_thenReturnCurrencyConversion() throws Exception {
         CurrencyCode from = CurrencyCode.USD;
         CurrencyCode to = CurrencyCode.EUR;
+        String currencyPair = "USDEUR";
         Double amount = 10d;
 
         RequestBuilder request = MockMvcRequestBuilders.get("/v1/convert?from=" + from + "&to=" + to + "&amount=" + amount)
@@ -75,8 +76,8 @@ public class ExchangeRatesControllerTest {
         long timestamp = System.currentTimeMillis();
         double quote = 0.93145;
         double result = amount * quote;
-        ConversionRatesDTO conversionRatesDTO = new ConversionRatesDTO(from, to, amount, quote, result);
-        ConversionRatesResponseDTO exchangeRatesDTO = new ConversionRatesResponseDTO(timestamp, List.of(conversionRatesDTO));
+        ConversionRatesDTO conversionRatesDTO = new ConversionRatesDTO(currencyPair, quote, result);
+        ConversionRatesResponseDTO exchangeRatesDTO = new ConversionRatesResponseDTO(timestamp, amount, List.of(conversionRatesDTO));
 
         String response = objectMapper.writeValueAsString(exchangeRatesDTO);
 
