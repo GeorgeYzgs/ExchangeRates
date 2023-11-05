@@ -7,6 +7,7 @@ import com.ggiazitz.exchangeRates.models.CurrencyCode;
 import com.ggiazitz.exchangeRates.services.ExchangeAPIService;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -63,7 +64,8 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
         return new ConversionRatesResponseDTO(System.currentTimeMillis(), amount, currencyConversion);
     }
 
-    private ExchangeRatesDTO exchangeCurrencies(CurrencyCode source, List<CurrencyCode> currencies) {
+    @Cacheable("Currencies")
+    public ExchangeRatesDTO exchangeCurrencies(CurrencyCode source, List<CurrencyCode> currencies) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
                         .queryParam("currencies", StringUtils.join(currencies.stream().map(Object::toString).collect(Collectors.toList()), ','))
@@ -71,7 +73,8 @@ public class ExchangeAPIServiceImpl implements ExchangeAPIService {
                 .retrieve().bodyToMono(ExchangeRatesDTO.class).block();
     }
 
-    private ExchangeRatesDTO exchangeAllCurrencies(CurrencyCode source) {
+    @Cacheable("AllCurrencies")
+    public ExchangeRatesDTO exchangeAllCurrencies(CurrencyCode source) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/live")
                         .queryParam("source", source)
                         .queryParam("access_key", accessKey).build())
